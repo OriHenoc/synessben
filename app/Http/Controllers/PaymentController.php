@@ -277,8 +277,7 @@ class PaymentController extends Controller
                 $data = 'https://synessben.committeam.com/qrcode/'.$etudiant->numCarteEtud;
 
                 $qrPath = public_path('assets/images/etudiants/qrcode/') . $etudiant->numCarteEtud . '.png';
-                $logoPath = public_path('assets/images/logo.png');
-
+                
                 QrCode::format('png')->size(200)->color(0, 0, 0)->generate($data, $qrPath);
 
                 foreach($paiements as $paiement){
@@ -309,24 +308,24 @@ class PaymentController extends Controller
 
             $qrPath = public_path('assets/images/etudiants/qrcode/') . $paiement->qrCode;
 
-            $pdfPath = public_path('assets/images/etudiants/qrcode/') . $etudiant->numCarteEtud . '.pdf';
-
+            //$pdfPath = public_path('assets/images/etudiants/qrcode/') . $etudiant->numCarteEtud . '.pdf';
+/*
             $pdf = new TCPDF();
             $pdf->SetPageOrientation('L');
             $pdf->AddPage();
             $pdf->Image($qrPath);
-            $pdf->Output($pdfPath, 'F');
+            $pdf->Output($pdfPath, 'F');*/
 
             $recipientEmail = $etudiant->email;
             $subject = 'Votre QR CODE de vérification SYNESS-BEN';
 
-            Mail::send([], [], function ($message) use ($pdfPath, $recipientEmail, $subject) {
+            Mail::send([], [], function ($message) use ($qrPath, $recipientEmail, $subject) {
                 $message->to($recipientEmail)
                     ->subject($subject)
-                    ->attach($pdfPath);
+                    ->attach($qrPath);
             });
             
-            unlink($pdfPath);
+            //unlink($pdfPath);
 
             return redirect()->back()->with('success', 'QR CODE envoyé avec succès !');
 
