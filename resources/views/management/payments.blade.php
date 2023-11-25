@@ -600,7 +600,7 @@
         url: '/qrcode-etudiant/' + etudiantID,
         success: function (data) {
             $('#qrEtudiantID').val(etudiantID);
-            var link = 'http://localhost:8000/assets/images/etudiants/qrcode/'+ data.image;
+            var link = 'https://synessben.committeam.com/assets/images/etudiants/qrcode/'+ data.image;
             $('#qrCodeImage').attr('src', link);
             $('#qrLink').attr('href', link);
             $('#qrCodeModal').modal('show');
