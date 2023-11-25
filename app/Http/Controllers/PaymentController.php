@@ -276,7 +276,7 @@ class PaymentController extends Controller
 
                 $data = 'https://synessben.committeam.com/qrcode/'.$etudiant->numCarteEtud;
 
-                $qrPath = public_path('assets/images/etudiants/qrcode/') . $etudiant->numCarteEtud . '.svg';
+                $qrPath = public_path('assets/images/etudiants/qrcode/') . $etudiant->numCarteEtud . '.png';
                 $logoPath = public_path('assets/images/logo.png');
 
                 QrCode::format('png')->size(200)->color(0, 0, 0)->generate($data, $qrPath);
