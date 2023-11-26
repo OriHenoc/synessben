@@ -311,7 +311,7 @@ class StudentController extends Controller
             return redirect()->back()->with('success','Informations mises à jour !');
         }
 
-        return redirect()->route('students')->with('success','Informations modifiées !');
+        return redirect()->back()->with('success','Informations modifiées !');
     }  
         else {
             return redirect()->route('deconnexion');
