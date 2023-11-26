@@ -48,6 +48,7 @@ class HomeController extends Controller
                 ->get();
 
             $etudiantsNonSoldes = Etudiant::where('active', true)
+                ->whereHas('paiements')
                 ->whereDoesntHave('paiements', function ($query) {
                     $query->where('montantRestant', 0);
                 })

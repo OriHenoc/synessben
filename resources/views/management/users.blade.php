@@ -4,6 +4,8 @@
 <body class="theme-black">
 @include('layout/nav')
 
+@if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
+
 <section class="content contact">
     <div class="container-fluid">
         <div class="block-header">
@@ -53,9 +55,20 @@
                                             <td>{{$etudiant->telephone}}</td>
                                             <td>
                                                 <button title="voir" class="btn btn-icon btn-neutral btn-icon-mini margin-0 voir-etudiant" data-id="{{$etudiant->id}}"><i class="zmdi zmdi-eye"></i></button>
-                                                <a href="{{route('getEtudiant', $etudiant->id)}}"><button title="modifier" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-edit"></i></button></a>
-                                                @if($etudiant->id !== $utilisateur->id)
-                                                <button title="supprimer" class="btn btn-icon btn-neutral btn-icon-mini margin-0 supprimer-etudiant" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}"><i class="zmdi zmdi-delete"></i></button>
+                                                @if($utilisateur->role->libelle !== 'ROOT')
+                                                    @if($etudiant->role->libelle !== 'ROOT')
+                                                        <a href="{{route('getEtudiant', $etudiant->id)}}"><button title="modifier" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-edit"></i></button></a>
+                                                        @if($etudiant->id !== $utilisateur->id)
+                                                            <button title="supprimer" class="btn btn-icon btn-neutral btn-icon-mini margin-0 supprimer-etudiant" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}"><i class="zmdi zmdi-delete"></i></button>
+                                                        @endif
+                                                    @endif
+                                                @else
+                                                    @if($etudiant->role->libelle !== 'ROOT')
+                                                        <a href="{{route('getEtudiant', $etudiant->id)}}"><button title="modifier" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-edit"></i></button></a>
+                                                        @if($etudiant->id !== $utilisateur->id)
+                                                            <button title="supprimer" class="btn btn-icon btn-neutral btn-icon-mini margin-0 supprimer-etudiant" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}"><i class="zmdi zmdi-delete"></i></button>
+                                                        @endif
+                                                    @endif
                                                 @endif
                                             </td>
                                         </tr>
@@ -119,6 +132,13 @@
     </div>
 </div>
 
+@else
+<section class="content">
+    <h1 class="text-danger">
+        VOUS N'AVEZ PAS LE DROIT D'ETRE ICI !!!
+    </h1>
+</section>
+@endif
 
 @include('layout/javascript')
 

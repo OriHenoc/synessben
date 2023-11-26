@@ -4,6 +4,8 @@
 <body class="theme-black">
 @include('layout/nav')
 
+@if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
+
 <section class="content contact">
     <div class="container-fluid">
         <div class="block-header">
@@ -91,6 +93,13 @@
     </div>
 </div>
 
+@else
+<section class="content">
+    <h1 class="text-danger">
+        VOUS N'AVEZ PAS LE DROIT D'ETRE ICI !!!
+    </h1>
+</section>
+@endif
 
 @include('layout/javascript')
 

@@ -4,6 +4,9 @@
 <body class="theme-black">
 @include('layout/nav')
 
+@if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
+                
+
 <section class="content contact">
     <div class="container-fluid">
         <div class="block-header">
@@ -73,7 +76,9 @@
                                                 <td>
                                                     <a href="{{route('getAllEtudiantPayments', $paiement->etudiant->id)}}"><button title="voir tout" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-eye"></i></button></a>
                                                     @if($paiement->montantRestant > 0)<button title="ajouter un versement" class="btn btn-icon btn-neutral btn-icon-mini margin-0 ajouter-versement" data-id="{{$paiement->id}}"><i class="zmdi zmdi-plus-circle"></i></button>@endif
+                                                    @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN')
                                                     <button title="supprimer" class="btn btn-icon btn-neutral btn-icon-mini margin-0 supprimer-paiement" data-etudiant="{{$paiement->etudiant->id}}" data-nom="{{$paiement->etudiant->nom}}" data-prenoms="{{$paiement->etudiant->prenoms}}"><i class="zmdi zmdi-delete"></i></button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -128,7 +133,7 @@
                                         <div class="col-lg-6 mt-1 col-md-12">
                                             <div class="form-group">
                                                 <label class="font-weight-bold" for="montantApayer">Montant à payer</label>
-                                                <input id="montantApayer" name="montantApayer" required="true" type="number" step="500" min="0" class="form-control" value="30000">
+                                                <input id="montantApayer" @if($utilisateur->role->libelle == 'COMPTABLE') readonly @endif name="montantApayer" required="true" type="number" step="500" min="0" class="form-control" value="30000">
                                                 @error('montantApayer')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -285,6 +290,7 @@
     </div>
 </div>
 
+@if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN')
 <!-- Modal pour supprimer les détails de l'étudiant -->
 <div class="modal fade" id="supprimerPaiementModal" tabindex="-1" role="dialog" aria-labelledby="supprimerPaiementModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -308,6 +314,7 @@
         </div>
     </div>
 </div>
+@endif
 
 <div class="modal fade" id="ajoutVersementModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -365,6 +372,14 @@
         </div>
     </div>
 </div>
+
+@else
+<section class="content">
+    <h1 class="text-danger">
+        VOUS N'AVEZ PAS LE DROIT D'ETRE ICI !!!
+    </h1>
+</section>
+@endif
 
 @include('layout/javascript')
 
