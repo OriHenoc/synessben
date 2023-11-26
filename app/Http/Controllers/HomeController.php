@@ -38,9 +38,8 @@ class HomeController extends Controller
             $paiements = Paiement::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
             
-            $revenu = Paiement::where('active', true)->sum('montantPaye');
-            //$revenu = number_format(intval($revenu), 0, ',', '.');
-
+            $revenu = (int)Paiement::where('active', true)->sum('montantPaye');
+            
             $etudiantsSoldes = Etudiant::where('active', true)
                 ->whereHas('paiements', function ($query) {
                     $query->where('montantRestant', 0);

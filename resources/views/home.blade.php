@@ -23,7 +23,7 @@
                     <div class="body">
                         <p class="m-b-20"><i class="zmdi zmdi-money zmdi-hc-3x col-amber"></i></p>
                         <span>Revenu Total</span>
-                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="{{$revenu}}" data-speed="2000" data-fresh-interval="700">0</span> F</h3>
+                        <h3 class="m-b-10"><span id="revenu">calcul ...</span></h3>
                         <small class="text-muted">(Montant entré en caisse)</small>
                     </div>
                 </div>
@@ -128,6 +128,17 @@
 </section>
 
 @include('layout/javascript')
+
+<script>
+
+$(document).ready(function() {
+
+    var rev = new Intl.NumberFormat('fr-FR').format({{$revenu}});
+    
+    $('#revenu').text(rev+' F').delay(2000).fadeIn(1000);
+    });
+
+</script>
 
 </body>
 </html>
