@@ -59,7 +59,7 @@ class PaymentController extends Controller
 
             $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
-            $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
+            $roles = Role::where([['active', true]])->orderBy('libelle', 'desc')->get();
             $menu = 'Paiements';
             return view('management.payments', compact('menu', 'utilisateur', 'etudiants', 'etudiantsWithoutPaiements', 'paiements', 'paiementsEtudiants', 'utilisateurs', 'roles', 'fiveLast'));
         }
@@ -79,7 +79,7 @@ class PaymentController extends Controller
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
-            $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
+            $roles = Role::where([['active', true]])->orderBy('libelle', 'desc')->get();
             $menu = 'Versements de <b>'.$versements[0]->etudiant->nom.' '.$versements[0]->etudiant->prenoms.'</b>';
             return view('management.studentVersements', compact('menu', 'utilisateur', 'etudiants', 'paiements', 'versements', 'utilisateurs', 'roles', 'fiveLast'));
         }
@@ -95,12 +95,20 @@ class PaymentController extends Controller
             if($versements->isEmpty()){
                 return redirect()->back();
             }
+
+            $image = '';
+
+            if($versements){
+                $image = $versements[0]->qrCode;
+            }
+
             return response()->json([
                 'versements' => $versements,
                 'nom' => $latestVersement->etudiant->nom,
                 'prenoms' => $latestVersement->etudiant->prenoms,
                 'carte' => $latestVersement->etudiant->numCarteEtud,
                 'statut' => $latestVersement->montantRestant == 0 ? 'Soldé' : 'Acompté',
+                'image' => $image
             ]);
         }
         else {

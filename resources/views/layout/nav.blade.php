@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 @endif
-                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
+                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT' || $utilisateur->role->libelle == 'SUPERVISEUR')
                 <li class="header">PARAMETRES</li>
                 <li class="@if($menu=='Utilisateurs') active open @endif">
                     <a href="{{route('users')}}" class="menu-toggle">

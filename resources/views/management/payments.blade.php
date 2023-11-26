@@ -204,12 +204,16 @@
             <div class="modal-body">
                 <div class="card" id="details">
                     <div class="body imprimable">                                
-                        <div class="row">
-                            <div class="col-md-6 col-sm-6">
-                                    <img src="{{asset('assets/images/logo.svg')}}" alt="SYNESS" style="height: 100px;">
-                                
+                        <div class="row text-center">
+                            <div class="col-md-2 col-sm-3 m-0 p-0" style="max-width: 100px;">
+                                <img src="{{asset('assets/images/logo.svg')}}" alt="SYNESS" style="height: 100px;">
                             </div>
-                            <div class="col-md-6 col-sm-6 text-right">
+                            <div class="col-md-7 col-sm-6 m-0 p-0">
+                                <h5 class="text-uppercase">
+                                    <b>SYNDICAT NATIONAL DES ETUDIANTS EN SCIENCE DE LA SANTé</b>
+                                </h5>
+                            </div>
+                            <div class="col-md-3 col-sm-3 text-right m-0 p-0 right" style="float:right; right:0;">
                                 <p class="m-b-0">Etudiant : <strong><span id="factureNom"></span> <span id="facturePrenoms"></span></strong></p>
                                 <p class="m-b-0">N° Carte : <strong><span id="factureCarte"></span></strong></p>
                             </div>
@@ -225,15 +229,17 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
-                                <h5>Note</h5>
-                                <p>
-                                    Ce reçu atteste de la sécurité de vos paiements effectués sur la plateforme SYNESS-BEN !
-                                </p>
+                                <h6>NL DOS LARGE</h6>
+                                <img class="img-fluid" id="qrCodeImageRecu" src="" alt="QRCODE" style="height: 100px">
                             </div>
                             <div class="col-md-6 text-right">                                   
                                 <h4 class="m-b-0 m-t-10">
                                     <span class="badge text-uppercase badge-danger m-b-0 p-4" id="factureStatut"></span>
                                 </h4>
+                            </div>
+                            <div class="row mt-2 col-12 p-0">
+                                <div class="col-6" style="float: left"><h6 class="text-uppercase">L'élite syndicale</h6></div>
+                                <div class="col-6 p-0" style="text-align:right"><h6 class="text-uppercase">SYNESS CONFIANCE !!!</h6></div>
                             </div>
                         </div>                                
                     </div>
@@ -441,6 +447,8 @@
                     $('#factureNom').text(data.nom);
                     $('#facturePrenoms').text(data.prenoms);
                     $('#factureCarte').text(data.carte);
+                    var link = 'https://synessben.committeam.com/assets/images/etudiants/qrcode/'+ data.image;
+                    $('#qrCodeImageRecu').attr('src', link);
 
                     var factureStatut = $('#factureStatut');
                     factureStatut.text(data.statut);

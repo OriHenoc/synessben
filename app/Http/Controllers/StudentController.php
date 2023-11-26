@@ -24,11 +24,11 @@ class StudentController extends Controller
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
             
             if($utilisateur->role->libelle == 'ROOT'){
-                $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
+                $roles = Role::where([['active', true]])->orderBy('libelle', 'desc')->get();
             }
             else{
                 $roles = Role::where([['active', true], ['libelle', '<>', 'ROOT'], ['libelle', '<>', 'SUPPORT']])
-                     ->orderBy('libelle', 'asc')
+                     ->orderBy('libelle', 'desc')
                      ->get();
             }
 
@@ -227,11 +227,11 @@ class StudentController extends Controller
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
             $paiements = Paiement::where([['active', true]])->orderBy('created_at', 'desc')->get();
             if($utilisateur->role->libelle == 'ROOT'){
-                $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
+                $roles = Role::where([['active', true]])->orderBy('libelle', 'desc')->get();
             }
             else{
                 $roles = Role::where([['active', true], ['libelle', '<>', 'ROOT'], ['libelle', '<>', 'SUPPORT']])
-                     ->orderBy('libelle', 'asc')
+                     ->orderBy('libelle', 'desc')
                      ->get();
             }
             $menu = 'Etudiants';
@@ -388,7 +388,7 @@ class StudentController extends Controller
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
-            $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
+            $roles = Role::where([['active', true]])->orderBy('libelle', 'desc')->get();
             $menu = 'Utilisateurs';
             return view('management.users', compact('menu', 'utilisateur', 'roles', 'etudiants', 'paiements', 'fiveLast', 'utilisateurs'));
         }

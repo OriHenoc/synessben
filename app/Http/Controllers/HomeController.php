@@ -62,7 +62,7 @@ class HomeController extends Controller
 
             $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
-            $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
+            $roles = Role::where([['active', true]])->orderBy('libelle', 'desc')->get();
             $menu = 'Tableau de bord';
             return view('home', compact('menu', 'utilisateur', 'etudiants', 'etudiantsSoldes', 'revenu', 'etudiantsNonSoldes', 'etudiantsWithoutPaiements', 'utilisateurs', 'paiements', 'roles', 'fiveLast'));
         }
@@ -79,7 +79,7 @@ class HomeController extends Controller
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
-            $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
+            $roles = Role::where([['active', true]])->orderBy('libelle', 'desc')->get();
             $menu = 'profil';
             return view('user.profile', compact('menu', 'utilisateur', 'etudiants', 'paiements', 'utilisateurs', 'roles', 'fiveLast'));
         }

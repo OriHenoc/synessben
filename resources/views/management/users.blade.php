@@ -4,7 +4,7 @@
 <body class="theme-black">
 @include('layout/nav')
 
-@if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
+@if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT' || $utilisateur->role->libelle == 'SUPERVISEUR')
 
 <section class="content contact">
     <div class="container-fluid">
@@ -46,7 +46,7 @@
                                         </tr>
                                     </thead>                                
                                     <tbody>
-                                        @foreach($etudiants as $etudiant)
+                                        @foreach($utilisateurs as $etudiant)
                                         <tr>
                                             <td><img @if($etudiant->photo) src="{{asset('assets/images/etudiants/photos/'.$etudiant->photo)}}" @else src="{{asset('assets/images/avatar.png')}}" @endif class="rounded-circle avatar" alt="photo"></td>
                                             <td>{{$etudiant->nom}} {{$etudiant->prenoms}} @if($etudiant->username) <span class="text-uppercase">({{$etudiant->username}})</span> @endif</td>
@@ -59,7 +59,9 @@
                                                     @if($etudiant->role->libelle !== 'ROOT')
                                                         <a href="{{route('getEtudiant', $etudiant->id)}}"><button title="modifier" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-edit"></i></button></a>
                                                         @if($etudiant->id !== $utilisateur->id)
-                                                            <button title="supprimer" class="btn btn-icon btn-neutral btn-icon-mini margin-0 supprimer-etudiant" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}"><i class="zmdi zmdi-delete"></i></button>
+                                                            @if($etudiant->role->libelle !== 'ADMIN')
+                                                                <button title="supprimer" class="btn btn-icon btn-neutral btn-icon-mini margin-0 supprimer-etudiant" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}"><i class="zmdi zmdi-delete"></i></button>
+                                                            @endif
                                                         @endif
                                                     @endif
                                                 @else
