@@ -115,7 +115,7 @@
                                                 <span class="input-group-addon">
                                                     <i class="zmdi zmdi-calendar"></i>
                                                 </span>
-                                                <input required="true" type="text" id="datenais" name="datenais" class="form-control datetimepicker" placeholder="Cliquer pour choisir la date..." value="{{ $utilisateur->datenais }}">
+                                                <input required="true" type="text" id="datenais" name="datenais" class="form-control datetimepicker" placeholder="Cliquer pour choisir la date..." value="{{ date('d/m/Y', strtotime($utilisateur->datenais)) }}">
                                                 @error('datenais')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror

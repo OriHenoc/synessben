@@ -302,7 +302,11 @@ class StudentController extends Controller
         }
 
         if($request->roleID == null){
-            $data['roleID'] = 1;
+            $data['roleID'] = $etudiant->roleID;
+        }
+
+        if($request->username == null){
+            $data['username'] = $etudiant->username;
         }
 
         $etudiant->update($data);
