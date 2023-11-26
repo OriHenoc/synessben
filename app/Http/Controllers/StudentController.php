@@ -122,9 +122,8 @@ class StudentController extends Controller
                 $dossierContentFile = public_path('assets/images/etudiants/photos/');
                 $uploadPhoto = $photo->move($dossierContentFile, $nomDuFichier);
                 Storage::move($dossierContentFile, 'public/webinar/', $nomDuFichier);  
+                $data['photo'] = $nomDuFichier;
             }
-            
-            $data['photo'] = $nomDuFichier;
 
             $timestamp = strtotime($request->datenais);
             $data['datenais'] = date('Y-m-d', $timestamp);
