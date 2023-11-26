@@ -11,10 +11,9 @@
                     <div class="company_detail">
                         <h4 class="logo"><img src="assets/images/logo.svg" alt="logo"> SYNESS-BEN</h4>
                         <h3>Outil <strong>Puissant</strong> de gestion pour le SYNESS</h3>
-                        <p>
-                            SYNESS-BEN est une idée originale <br>de NL ECHODOPPLER 
-                            sous la supervision <br>de NL DOS LARGE pour la gestion 
-                            automatisée <br>et la supervision des activités du SYNESS.
+                        <p class="text-justify">
+                            SYNESS-BEN est une idée originale du bureau exécutif national 
+                            avec à sa tête le NL DOS LARGE.
                         </p>                        
                         <div class="footer">
                             <hr>
