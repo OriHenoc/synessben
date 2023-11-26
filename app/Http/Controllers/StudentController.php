@@ -113,11 +113,17 @@ class StudentController extends Controller
             $data = $request->all();
             
             $photo = $request->file('photo');
-            $extentionFichier = $photo->getClientOriginalExtension();
-            $nomDuFichier = $request->numCarteEtud.'.'.$extentionFichier;
-            $dossierContentFile = public_path('assets/images/etudiants/photos/');
-            $uploadPhoto = $photo->move($dossierContentFile, $nomDuFichier);
-            Storage::move($dossierContentFile, 'public/webinar/', $nomDuFichier);
+            if(!$photo || $photo == null){
+                $data['photo'] = 'avatar.png';
+            }
+            else{
+                $extentionFichier = $photo->getClientOriginalExtension();
+                $nomDuFichier = $request->numCarteEtud.'.'.$extentionFichier;
+                $dossierContentFile = public_path('assets/images/etudiants/photos/');
+                $uploadPhoto = $photo->move($dossierContentFile, $nomDuFichier);
+                Storage::move($dossierContentFile, 'public/webinar/', $nomDuFichier);  
+            }
+            
             $data['photo'] = $nomDuFichier;
 
             $timestamp = strtotime($request->datenais);
