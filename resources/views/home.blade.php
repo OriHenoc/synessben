@@ -18,6 +18,7 @@
             </div>
         </div>
         <div class="row clearfix">
+            @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
             <div class="col-lg-3 col-md-6">
                 <div class="card text-center">
                     <div class="body">
@@ -28,6 +29,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="col-lg-3 col-md-6">
                 <div class="card text-center">
                     <div class="body">
@@ -38,6 +40,7 @@
                     </div>
                 </div>
             </div>
+            @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE' || $utilisateur->role->libelle == 'SUPERVISEUR')
             <div class="col-lg-3 col-md-6">
                 <div class="card text-center">
                     <div class="body">
@@ -58,8 +61,10 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
         <div class="row clearfix">
+            @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE' || $utilisateur->role->libelle == 'SUPERVISEUR')
             <div class="col-md-6 col-lg-6">
                 <div class="card">
                     <div class="header">
@@ -91,6 +96,7 @@
                     </div>     
                 </div>
             </div>
+            @endif
             <div class="col-md-6 col-lg-6">
                 <div class="card">
                     <div class="header">

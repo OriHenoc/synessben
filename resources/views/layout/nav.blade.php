@@ -41,6 +41,7 @@
                         <span>Tableau de bord</span>
                     </a>
                 </li>
+                @if($utilisateur->role->libelle !== 'ETUDIANT')
                 <li class="@if($menu=='Etudiants') active open @endif">
                     <a href="{{route('students')}}" class="menu-toggle">
                         <i class="zmdi zmdi-accounts"></i>
@@ -48,6 +49,8 @@
                         <span class="badge badge-success float-right">{{count($etudiants)}}</span>
                     </a>
                 </li>
+                @endif
+                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
                 <li class="@if($menu=='Paiements') active open @endif">
                     <a href="{{route('payments')}}">
                         <i class="zmdi zmdi-money"></i>
@@ -55,6 +58,8 @@
                         <span class="badge badge-default float-right">{{count($paiements)}}</span>
                     </a>
                 </li>
+                @endif
+                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
                 <li class="header">PARAMETRES</li>
                 <li class="@if($menu=='Utilisateurs') active open @endif">
                     <a href="{{route('users')}}" class="menu-toggle">
@@ -63,6 +68,7 @@
                         <span class="badge badge-warning float-right">{{count($utilisateurs)}}</span>
                     </a>
                 </li>
+                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'SUPPORT')
                 <li><a href="javascript:void(0);" class="menu-toggle">
                     <i class="zmdi zmdi-grid"></i>
                     <span>Rôles</span>
@@ -74,13 +80,15 @@
                     <span>Permissions</span>
                     <span class="badge badge-default float-right">6</span>
                 </a>
-                </li>               
+                </li>
+                @endif               
                 <li><a href="javascript:void(0);" class="menu-toggle">
                     <i class="zmdi zmdi-settings"></i>
                     <span>Configurations</span>
                     <span class="badge badge-default float-right">3</span>
                 </a>
-                </li>            
+                </li>  
+                @endif          
             </ul>
         </div>
     </div>
