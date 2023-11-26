@@ -30,7 +30,7 @@
                         </div>
                         <div class="detail">
                             <h6>{{$utilisateur->username}}</h6>
-                            <p class="m-b-0">{{$utilisateur->role->libelle}}</p>                         
+                            <p class="m-b-0">@if($utilisateur->role->libelle == 'SUPERVISEUR') LE SGN @else {{$utilisateur->role->libelle}} @endif</p>                         
                         </div>
                     </div>
                 </li>
