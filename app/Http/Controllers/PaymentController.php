@@ -57,7 +57,7 @@ class PaymentController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
 
-            $fiveLast = Etudiant::latest()->take(5)->get();
+            $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
             $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
             $menu = 'Paiements';
@@ -77,7 +77,7 @@ class PaymentController extends Controller
                 return redirect()->back();
             }
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
-            $fiveLast = Etudiant::latest()->take(5)->get();
+            $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
             $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
             $menu = 'Versements de <b>'.$versements[0]->etudiant->nom.' '.$versements[0]->etudiant->prenoms.'</b>';

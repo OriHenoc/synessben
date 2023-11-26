@@ -20,7 +20,7 @@ class StudentController extends Controller
             $utilisateur = Etudiant::find(session('utilisateur'));
             $paiements = Paiement::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
-            $fiveLast = Etudiant::latest()->take(5)->get();
+            $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
             $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
             $menu = 'Etudiants';
@@ -214,7 +214,7 @@ class StudentController extends Controller
             }
 
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
-            $fiveLast = Etudiant::latest()->take(5)->get();
+            $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
             $paiements = Paiement::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
