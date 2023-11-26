@@ -135,9 +135,30 @@
 
 @include('layout/javascript')
 
+<script src="{{asset('assets/js/pages/confetti.js')}}"></script>
+
 <script>
 
 $(document).ready(function() {
+
+     // start
+
+     const start = () => {
+            setTimeout(function() {
+                confetti.start()
+            }, 700);
+        };
+
+        const stop = () => {
+            setTimeout(function() {
+                confetti.stop()
+            }, 7000);
+        };
+
+        @if($utilisateur->role->libelle == "SUPERVISEUR")
+            start();
+            stop();
+        @endif
 
     var rev = new Intl.NumberFormat('fr-FR').format({{$revenu}});
     
