@@ -66,102 +66,102 @@ class StudentController extends Controller
     {
         if(session()->has('utilisateur')){
         
-        $utilisateur = Etudiant::find(session('utilisateur'));
+            $utilisateur = Etudiant::find(session('utilisateur'));
 
-        $validator = validator($request->all(),
-            [
-                'nom' => 'required',
-                'prenoms' => 'required',
-                'datenais' => 'required',
-                'niveau' => 'required',
-                'numCarteEtud' => 'required|unique:etudiants',
-                'email' => 'required|email|unique:etudiants',
-                'telephone' => 'required|unique:etudiants',
-                'username' => 'unique:etudiants',
-            ],
-            [
-                'nom.required' => 'Le nom est requis',
-                'prenoms.required' => 'Le(s) prénom(s) sont requis',
-                'datenais.required' => 'La date de naissance est requise',
-                'niveau.required' => 'Le niveau d\'étude est requis',
-                'numCarteEtud.required' => 'Le numéro de carte étudiant est requis',
-                'email.required' => 'L\'adresse e-mail est requise',
-                'telephone.required' => 'Le numéro de téléphone est requis',
-                'telephone.unique' => 'Ce numéro existe déja',
-                'email.unique' => 'Cet e-mail existe déja',
-                "email.email" => "Cet email n'est pas un email valide",
-                'numCarteEtud.unique' => 'Ce numéro de carte étudiant existe déja',
-                'username.unique' => 'Ce nom d\'utilisateur existe déja'
-            ]
-        );
+            $validator = validator($request->all(),
+                [
+                    'nom' => 'required',
+                    'prenoms' => 'required',
+                    'datenais' => 'required',
+                    'niveau' => 'required',
+                    'numCarteEtud' => 'required|unique:etudiants',
+                    'email' => 'required|email|unique:etudiants',
+                    'telephone' => 'required|unique:etudiants',
+                    'username' => 'unique:etudiants',
+                ],
+                [
+                    'nom.required' => 'Le nom est requis',
+                    'prenoms.required' => 'Le(s) prénom(s) sont requis',
+                    'datenais.required' => 'La date de naissance est requise',
+                    'niveau.required' => 'Le niveau d\'étude est requis',
+                    'numCarteEtud.required' => 'Le numéro de carte étudiant est requis',
+                    'email.required' => 'L\'adresse e-mail est requise',
+                    'telephone.required' => 'Le numéro de téléphone est requis',
+                    'telephone.unique' => 'Ce numéro existe déja',
+                    'email.unique' => 'Cet e-mail existe déja',
+                    "email.email" => "Cet email n'est pas un email valide",
+                    'numCarteEtud.unique' => 'Ce numéro de carte étudiant existe déja',
+                    'username.unique' => 'Ce nom d\'utilisateur existe déja'
+                ]
+            );
 
-       if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+        if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
 
-        $data = $request->all();
-        
-        $photo = $request->file('photo');
-        $extentionFichier = $photo->getClientOriginalExtension();
-        $nomDuFichier = $request->numCarteEtud.'.'.$extentionFichier;
-        $dossierContentFile = public_path('assets/images/etudiants/photos/');
-        $uploadPhoto = $photo->move($dossierContentFile, $nomDuFichier);
-        Storage::move($dossierContentFile, 'public/webinar/', $nomDuFichier);
-        $data['photo'] = $nomDuFichier;
+            $data = $request->all();
+            
+            $photo = $request->file('photo');
+            $extentionFichier = $photo->getClientOriginalExtension();
+            $nomDuFichier = $request->numCarteEtud.'.'.$extentionFichier;
+            $dossierContentFile = public_path('assets/images/etudiants/photos/');
+            $uploadPhoto = $photo->move($dossierContentFile, $nomDuFichier);
+            Storage::move($dossierContentFile, 'public/webinar/', $nomDuFichier);
+            $data['photo'] = $nomDuFichier;
 
-        $timestamp = strtotime($request->datenais);
-        $data['datenais'] = date('Y-m-d', $timestamp);
+            $timestamp = strtotime($request->datenais);
+            $data['datenais'] = date('Y-m-d', $timestamp);
 
-        if($request->access == "on"){
-            $data['access'] = true;
-        }
+            if($request->access == "on"){
+                $data['access'] = true;
+            }
 
-        if($request->roleID == null){
-            $data['roleID'] = 1;
-        }
-        else{
-            $mdp = $this->generateRandomPassword();
-            $data['passwd'] = Hash::make($mdp);
-        }
+            if($request->roleID == null){
+                $data['roleID'] = 1;
+            }
+            else{
+                $mdp = $this->generateRandomPassword();
+                $data['passwd'] = Hash::make($mdp);
+            }
 
-        $etudiant = Etudiant::create($data);
+            $etudiant = Etudiant::create($data);
 
-        if($etudiant->access){
-            Mail::send([], [], function (Message $message) use ($etudiant, $mdp) {
-                $message->to($etudiant->email)
-                    ->subject('Bienvenue sur la plateforme du SYNESS-BEN')
-                    ->html(
-                        '<h3>'.
-                        $etudiant->nom.
-                        ' '.
-                        $etudiant->prenoms.
-                        ', vous êtes inscrit sur la plateforme du SYNESS-BEN. <br><br> Vos paramètres de connexion sont : <br><br> Nom d\'utilisateur : '.
-                        $etudiant->username.
-                        ' <br> Mot de passe : '.
-                        $mdp.
-                        ' <br><br> Veuillez vous connecter ici : <a href="https://www.synessben.committeam.com">SYNESS-BEN</a>
-                        </h3>'
-                    );
-            });
-        }
-        else{
-            Mail::send([], [], function (Message $message) use ($etudiant) {
-                $message->to($etudiant->email)
-                    ->subject('Enregistrement sur la plateforme du SYNESS-BEN')
-                    ->html(
-                        '<h3>'.
-                        $etudiant->nom.
-                        ' '.
-                        $etudiant->prenoms.
-                        ', vous êtes enregistré sur la plateforme du SYNESS-BEN.
-                        </h3>'
-                    );
-            });
-        }
+            if($etudiant->access){
+                Mail::send([], [], function (Message $message) use ($etudiant, $mdp) {
+                    $message->to($etudiant->email)
+                        ->subject('Bienvenue sur la plateforme du SYNESS-BEN')
+                        ->html(
+                            '<h3>'.
+                            $etudiant->nom.
+                            ' '.
+                            $etudiant->prenoms.
+                            ', vous êtes inscrit sur la plateforme du SYNESS-BEN. <br><br> Vos paramètres de connexion sont : <br><br> Nom d\'utilisateur : '.
+                            $etudiant->username.
+                            ' <br> Mot de passe : '.
+                            $mdp.
+                            ' <br><br> Veuillez vous connecter ici : <a href="https://www.synessben.committeam.com">SYNESS-BEN</a>
+                            </h3>'
+                        );
+                });
+            }
+            else{
+                Mail::send([], [], function (Message $message) use ($etudiant) {
+                    $message->to($etudiant->email)
+                        ->subject('Enregistrement sur la plateforme du SYNESS-BEN')
+                        ->html(
+                            '<h3>'.
+                            $etudiant->nom.
+                            ' '.
+                            $etudiant->prenoms.
+                            ', vous êtes enregistré sur la plateforme du SYNESS-BEN.
+                            </h3>'
+                        );
+                });
+            }
 
-        return redirect()->route('students')->with('success', 'Nouveau étudiant ajouté avec succès !');
+            return redirect()->route('students')->with('success', 'Nouveau étudiant ajouté avec succès !');
         }
         else {
             return redirect('deconnexion');
@@ -256,11 +256,11 @@ class StudentController extends Controller
             ]
             );
 
-    if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+        if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
 
         //verification des unicités
 
@@ -328,6 +328,13 @@ class StudentController extends Controller
 
         $etudiant->active = false;
         $etudiant->update();
+
+        $paiements = Paiement::where([['etudiantID', $etudiant->id], ['active', true]])->get();
+
+        foreach ($paiements as $paiement){
+            $paiement->active = false;
+            $paiement->update();
+        }
 
         return redirect()->back()->with('success', 'Etudiant supprimé de la liste !');
     }

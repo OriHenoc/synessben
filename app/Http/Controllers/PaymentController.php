@@ -219,18 +219,24 @@ class PaymentController extends Controller
 
     public function desactivateAll($id)
     {
-        $paiements = Paiement::where('etudiantID', $id)->get();
+        if(session()->has('utilisateur')){
+            $paiements = Paiement::where('etudiantID', $id)->get();
 
-        if (!$paiements) {
-            redirect()->back()->with('error', 'Paiements non trouvés !');
+            if (!$paiements) {
+                redirect()->back()->with('error', 'Paiements non trouvés !');
+            }
+
+            foreach($paiements as $paiement){
+                $paiement->active = false;
+                $paiement->update();
+            }
+
+            return redirect()->back()->with('success', 'Paiements supprimés de la liste !');
+        }
+        else {
+            return redirect('deconnexion');
         }
 
-        foreach($paiements as $paiement){
-            $paiement->active = false;
-            $paiement->update();
-        }
-
-        return redirect()->back()->with('success', 'Paiements supprimés de la liste !');
     }
 
     function sendInvoice(Request $request){

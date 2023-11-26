@@ -61,7 +61,9 @@
                                                 <li>
                                                     <a title="modifier" href="{{route('getEtudiant', $etudiant->id)}}"><i class="zmdi zmdi-edit"></i></a>
                                                 </li>
+                                                @if($etudiant->id !== $utilisateur->id)
                                                 <li><a title="supprimer" href="#" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}" class="supprimer-etudiant"><i class="zmdi zmdi-delete"></i></a></li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </div>
@@ -95,7 +97,9 @@
                                                 <td>
                                                     <button title="voir" class="btn btn-icon btn-neutral btn-icon-mini margin-0 voir-etudiant" data-id="{{$etudiant->id}}"><i class="zmdi zmdi-eye"></i></button>
                                                     <a href="{{route('getEtudiant', $etudiant->id)}}"><button title="modifier" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-edit"></i></button></a>
+                                                    @if($etudiant->id !== $utilisateur->id)
                                                     <button title="supprimer" class="btn btn-icon btn-neutral btn-icon-mini margin-0 supprimer-etudiant" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}"><i class="zmdi zmdi-delete"></i></button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
