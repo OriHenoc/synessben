@@ -11,7 +11,7 @@ $(function () {
         offset: 90,
         width: '250px',
         height: '250px',
-        sliceColors: ['#FFC107','#3f7dc5']
+        sliceColors: ['#FF3636','#16BC0E']
     })
 
     $("#sparkline14").sparkline([8,2,3,7,6,5,2,1,4,8], {

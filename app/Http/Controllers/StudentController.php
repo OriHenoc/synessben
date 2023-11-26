@@ -331,4 +331,24 @@ class StudentController extends Controller
 
         return redirect()->back()->with('success', 'Etudiant supprimé de la liste !');
     }
+
+    function qrCodeInfos($id) {
+
+        $etudiant = Etudiant::where('numCarteEtud', $id)->first();
+
+        $menu = '';
+
+        if($etudiant){
+
+            $latestVersement = Paiement::where([['etudiantID', $etudiant->id], ['active', true]])->latest('created_at')->first();
+
+            $montantRestant = $latestVersement->montantRestant;
+
+            return view('public.student', compact('etudiant', 'menu', 'montantRestant'));
+        }
+        else {
+            return view('public.badCode', compact('menu'));
+        }
+        
+    }
 }

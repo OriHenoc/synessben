@@ -38,12 +38,30 @@ class PaymentController extends Controller
             ->get();
 
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
-            $etudiantsNonSoldes = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
+            $etudiantsSoldes = Etudiant::where('active', true)
+                ->whereHas('paiements', function ($query) {
+                    $query->where('montantRestant', 0);
+                })
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $etudiantsNonSoldes = Etudiant::where('active', true)
+                ->whereDoesntHave('paiements', function ($query) {
+                    $query->where('montantRestant', 0);
+                })
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $etudiantsWithoutPaiements = Etudiant::where('active', true)
+                ->whereDoesntHave('paiements')
+                ->orderBy('created_at', 'desc')
+                ->get();
+
             $fiveLast = Etudiant::latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
             $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
             $menu = 'Paiements';
-            return view('management.payments', compact('menu', 'utilisateur', 'etudiants', 'etudiantsNonSoldes', 'paiements', 'paiementsEtudiants', 'utilisateurs', 'roles', 'fiveLast'));
+            return view('management.payments', compact('menu', 'utilisateur', 'etudiants', 'etudiantsWithoutPaiements', 'paiements', 'paiementsEtudiants', 'utilisateurs', 'roles', 'fiveLast'));
         }
         else {
             return redirect('deconnexion');

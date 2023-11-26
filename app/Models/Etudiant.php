@@ -32,7 +32,7 @@ class Etudiant extends Model
 
     public function paiements() 
     {
-        return $this->hasMany(Paiement::class, 'etudiantID');
+        return $this->hasMany(Paiement::class, 'etudiantID', 'id');
     }
 
     /**

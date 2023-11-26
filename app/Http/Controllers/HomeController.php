@@ -12,16 +12,59 @@ use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
+    /*
+    
+    function getFormattedNumber(
+        $value,
+        $locale = 'en_US',
+        $style = NumberFormatter::DECIMAL,
+        $precision = 2,
+        $groupIngUsed = true,
+        $currencyCode = 'USD'
+        ) {
+            $formatter = new NumberFormatter($locale, $style);
+            $formatter->setAttribute(NumberFormatter::FRACTION_DIGITS, $precision);
+            $formatter->setAttribute(NumberFormatter::GROUPING_USED, $groupIngUsed);
+            if($style == NumberFormatter::CURRENCY){
+                $formatter->setTextAttribute(NumberFormatter::CURRENCY_CODE, $currencyCode);
+            }
+            return $formatter->format($value);
+        }
+    
+    */
     public function index(){
         if(session()->has('utilisateur')){
             $utilisateur = Etudiant::find(session('utilisateur'));
             $paiements = Paiement::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
+            
+            $revenu = Paiement::where('active', true)->sum('montantPaye');
+            //$revenu = number_format(intval($revenu), 0, ',', '.');
+
+            $etudiantsSoldes = Etudiant::where('active', true)
+                ->whereHas('paiements', function ($query) {
+                    $query->where('montantRestant', 0);
+                })
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $etudiantsNonSoldes = Etudiant::where('active', true)
+                ->whereDoesntHave('paiements', function ($query) {
+                    $query->where('montantRestant', 0);
+                })
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $etudiantsWithoutPaiements = Etudiant::where('active', true)
+                ->whereDoesntHave('paiements')
+                ->orderBy('created_at', 'desc')
+                ->get();
+
             $fiveLast = Etudiant::latest()->take(5)->get();
             $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
             $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
             $menu = 'Tableau de bord';
-            return view('home', compact('menu', 'utilisateur', 'etudiants', 'utilisateurs', 'paiements', 'roles', 'fiveLast'));
+            return view('home', compact('menu', 'utilisateur', 'etudiants', 'etudiantsSoldes', 'revenu', 'etudiantsNonSoldes', 'etudiantsWithoutPaiements', 'utilisateurs', 'paiements', 'roles', 'fiveLast'));
         }
         else {
             return redirect('deconnexion');

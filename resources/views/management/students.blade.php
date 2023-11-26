@@ -44,7 +44,7 @@
                                 <div class="col-lg-3 col-md-6 col-sm-12">
                                     <div class="card">
                                         <div class="body text-center">
-                                            <div class="chart easy-pie-chart-1" data-percent="75">
+                                            <div class="chart easy-pie-chart-1" data-percent="100">
                                                 <span>
                                                     <img @if($etudiant->photo) src="{{asset('assets/images/etudiants/photos/'.$etudiant->photo)}}" @else src="{{asset('assets/images/avatar.png')}}" @endif alt="photo" class="rounded-circle"/>
                                                 </span>

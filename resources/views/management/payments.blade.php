@@ -87,6 +87,7 @@
                         <div class="card">
                             <div class="header">
                                 <h2><strong>Ajouter</strong> un nouveau paiement</h2>
+                                <small>NB : Ceci ne concerne que les étudiants n'ayant jamais fait de versement.</small>
                             </div>
                             <div class="body">
                                 <form action="{{route('payer')}}" method="POST">
@@ -115,7 +116,7 @@
                                             <div class="form-group">
                                                 <select class="form-control show-tick" id="etudiantID" name="etudiantID" required="required">
                                                     <option selected value="" disabled>-- Séléctionner l'étudiant --</option>
-                                                    @foreach($etudiantsNonSoldes as $etudiant)
+                                                    @foreach($etudiantsWithoutPaiements as $etudiant)
                                                         <option value="{{$etudiant->id}} {{ (old('etudiantID') == $etudiant->id) ? 'selected' : '' }}">{{$etudiant->nom}} {{$etudiant->prenoms}}</option>
                                                     @endforeach
                                                 </select>

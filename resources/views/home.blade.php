@@ -23,7 +23,7 @@
                     <div class="body">
                         <p class="m-b-20"><i class="zmdi zmdi-money zmdi-hc-3x col-amber"></i></p>
                         <span>Revenu Total</span>
-                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="90000" data-speed="2000" data-fresh-interval="700">0</span> F CFA</h3>
+                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="{{$revenu}}" data-speed="2000" data-fresh-interval="700">0</span> F</h3>
                         <small class="text-muted">(Montant entré en caisse)</small>
                     </div>
                 </div>
@@ -41,9 +41,9 @@
             <div class="col-lg-3 col-md-6">
                 <div class="card text-center">
                     <div class="body">
-                        <p class="m-b-20"><i class="zmdi zmdi-account-box zmdi-hc-3x"></i></p>
+                        <p class="m-b-20"><i class="zmdi zmdi-check-circle zmdi-hc-3x text-success"></i></p>
                         <span>Ayant soldé</span>
-                        <h3 class="m-b-10 number count-to" data-from="0" data-to="10" data-speed="2000" data-fresh-interval="700">0</h3>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="{{count($etudiantsSoldes)}}" data-speed="2000" data-fresh-interval="700">0</h3>
                         <small class="text-muted">(ceux qui ont payé la totalité)</small>
                     </div>
                 </div>
@@ -51,9 +51,9 @@
             <div class="col-lg-3 col-md-6">
                 <div class="card text-center">
                     <div class="body">
-                        <p class="m-b-20"><i class="zmdi zmdi-shopping-basket zmdi-hc-3x col-green"></i></p>
+                        <p class="m-b-20"><i class="zmdi zmdi-shopping-basket zmdi-hc-3x text-danger"></i></p>
                         <span>Paiements en cours</span>
-                        <h3 class="m-b-10 number count-to" data-from="0" data-to="5" data-speed="2000" data-fresh-interval="700">0</h3>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="{{count($etudiantsNonSoldes)}}" data-speed="2000" data-fresh-interval="700">0</h3>
                         <small class="text-muted">(ceux qui ont payé partiellement)</small>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
             <div class="col-md-6 col-lg-6">
                 <div class="card">
                     <div class="header">
-                        <h2><strong>Repartition</strong> Financière <small>La situation financière actuelle</small></h2>
+                        <h2><strong>Repartition</strong> Paiement <small>La situation des paiements</small></h2>
                         <ul class="header-dropdown">
                             <li class="dropdown"> <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
                                 <ul class="dropdown-menu slideUp">
@@ -75,15 +75,19 @@
                     <div class="body align-center">
                         <div class="row pb-3">
                             <div class="col-6">
-                                <h4 class="margin-0">70%</h4>
-                                <p>Soldé</p>
-                            </div>
-                            <div class="col-6">
-                                <h4 class="margin-0">30%</h4>
+                                <h4 class="margin-0">
+                                    <i class="material-icons text-danger">lens</i>
+                                </h4>
                                 <p>Paiement partiel</p>
                             </div>
+                            <div class="col-6">
+                                <h4 class="margin-0">
+                                    <i class="material-icons text-success">lens</i>
+                                </h4>
+                                <p>Soldé</p>
+                            </div>
                         </div>
-                        <div class="sparkline-pie" style="height: 247px;">3,7</div>
+                        <div class="sparkline-pie" style="height: 247px;">{{count($etudiantsNonSoldes)}},{{count($etudiantsSoldes)}}</div>
                     </div>     
                 </div>
             </div>
