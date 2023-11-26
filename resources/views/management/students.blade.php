@@ -4,6 +4,7 @@
 <body class="theme-black">
 @include('layout/nav')
 
+@if($utilisateur->role->libelle !== 'ETUDIANT')
 <section class="content contact">
     <div class="container-fluid">
         <div class="block-header">
@@ -24,7 +25,9 @@
                         <ul class="nav nav-tabs padding-0">
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Grid">Grille</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#List">Liste</a></li>
+                            @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT' || $utilisateur->role->libelle == 'AGENT DE SAISIE')
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Addnew">Nouveau</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -62,7 +65,9 @@
                                                     <a title="modifier" href="{{route('getEtudiant', $etudiant->id)}}"><i class="zmdi zmdi-edit"></i></a>
                                                 </li>
                                                 @if($etudiant->id !== $utilisateur->id)
-                                                <li><a title="supprimer" href="#" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}" class="supprimer-etudiant"><i class="zmdi zmdi-delete"></i></a></li>
+                                                    @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
+                                                        <li><a title="supprimer" href="#" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}" class="supprimer-etudiant"><i class="zmdi zmdi-delete"></i></a></li>
+                                                    @endif
                                                 @endif
                                             </ul>
                                         </div>
@@ -98,7 +103,9 @@
                                                     <button title="voir" class="btn btn-icon btn-neutral btn-icon-mini margin-0 voir-etudiant" data-id="{{$etudiant->id}}"><i class="zmdi zmdi-eye"></i></button>
                                                     <a href="{{route('getEtudiant', $etudiant->id)}}"><button title="modifier" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-edit"></i></button></a>
                                                     @if($etudiant->id !== $utilisateur->id)
-                                                    <button title="supprimer" class="btn btn-icon btn-neutral btn-icon-mini margin-0 supprimer-etudiant" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}"><i class="zmdi zmdi-delete"></i></button>
+                                                        @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
+                                                            <button title="supprimer" class="btn btn-icon btn-neutral btn-icon-mini margin-0 supprimer-etudiant" data-id="{{$etudiant->id}}" data-nom="{{$etudiant->nom}}" data-prenoms="{{$etudiant->prenoms}}"><i class="zmdi zmdi-delete"></i></button>
+                                                        @endif
                                                     @endif
                                                 </td>
                                             </tr>
@@ -214,6 +221,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
                                         <div class="col-lg-4 col-md-12 mt-4">
                                             <div class="checkbox">
                                                 <input id="access" name="access" type="checkbox">
@@ -242,6 +250,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @endif
                                         <div class="col-md-12">
                                             <button class="btn btn-primary btn-round" type="submit">Enregistrer</button>
                                         </div>
@@ -255,6 +264,13 @@
         </div>        
     </div>
 </section>
+@else
+<section class="content">
+    <h1 class="text-danger">
+        VOUS N'AVEZ PAS LE DROIT D'ETRE ICI !!!
+    </h1>
+</section>
+@endif
 
 <!-- Modal pour voir les détails de l'étudiant -->
 <div class="modal fade" id="voirEtudiantModal" tabindex="-1" role="dialog" aria-labelledby="voirEtudiantModalLabel" aria-hidden="true">
@@ -274,8 +290,10 @@
                 <p><strong>Niveau d'étude : </strong> <span id="niveauEtudiant"></span></p>
                 <p><strong>Numéro de carte étudiant : </strong> <span id="numCarteEtudiant"></span></p>
                 <p><strong>Numéro de téléphone : </strong> <span id="telephoneEtudiant"></span></p>
+                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
                 <p><strong>Peut gérer la plateforme ? </strong> <span id="accessEtudiant"></span></p>
                 <p><strong>Rôle : </strong> <span id="roleEtudiant"></span></p>
+                @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -284,6 +302,7 @@
     </div>
 </div>
 
+@if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
 <!-- Modal pour supprimer les détails de l'étudiant -->
 <div class="modal fade" id="supprimerEtudiantModal" tabindex="-1" role="dialog" aria-labelledby="supprimerEtudiantModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -307,7 +326,7 @@
         </div>
     </div>
 </div>
-
+@endif
 
 @include('layout/javascript')
 

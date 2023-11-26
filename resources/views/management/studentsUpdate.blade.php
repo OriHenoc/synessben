@@ -133,6 +133,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'SUPPORT')
                                 <div class="col-lg-4 col-md-12 mt-4">
                                     <div class="checkbox">
                                         <input id="access" name="access" type="checkbox" @if($etudiant->access) checked @endif>
@@ -161,6 +162,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                @endif
                                 <div class="col-md-12">
                                     <button class="btn btn-primary btn-round" type="submit">Enregistrer</button>
                                 </div>
