@@ -331,9 +331,11 @@ class StudentController extends Controller
 
         $paiements = Paiement::where([['etudiantID', $etudiant->id], ['active', true]])->get();
 
-        foreach ($paiements as $paiement){
-            $paiement->active = false;
-            $paiement->update();
+        if($paiements) {
+            foreach ($paiements as $paiement){
+                $paiement->active = false;
+                $paiement->update();
+            }
         }
 
         return redirect()->back()->with('success', 'Etudiant supprimé de la liste !');
@@ -357,5 +359,21 @@ class StudentController extends Controller
             return view('public.badCode', compact('menu'));
         }
         
+    }
+
+    public function getUtilisateurs(Request $request){
+        if(session()->has('utilisateur')){
+            $utilisateur = Etudiant::find(session('utilisateur'));
+            $paiements = Paiement::where([['active', true]])->orderBy('created_at', 'desc')->get();
+            $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
+            $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
+            $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
+            $roles = Role::where([['active', true]])->orderBy('libelle', 'asc')->get();
+            $menu = 'Utilisateurs';
+            return view('management.users', compact('menu', 'utilisateur', 'roles', 'etudiants', 'paiements', 'fiveLast', 'utilisateurs'));
+        }
+        else {
+            return redirect('deconnexion');
+        }
     }
 }

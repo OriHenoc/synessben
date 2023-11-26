@@ -56,8 +56,8 @@
                     </a>
                 </li>
                 <li class="header">PARAMETRES</li>
-                <li>
-                    <a href="javascript:void(0);" class="menu-toggle">
+                <li class="@if($menu=='Utilisateurs') active open @endif">
+                    <a href="{{route('users')}}" class="menu-toggle">
                         <i class="zmdi zmdi-account"></i>
                         <span>Utilisateurs</span>
                         <span class="badge badge-warning float-right">{{count($utilisateurs)}}</span>

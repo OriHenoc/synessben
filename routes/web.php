@@ -17,6 +17,7 @@ Route::post('/modifier-mot-de-passe', [HomeController::class, 'updatePassword'])
 Route::post('/changePP', [HomeController::class, 'changePP'])->name('changePP')->middleware('isLogged');
 //
 Route::get('/etudiants', [StudentController::class, 'index'])->name('students')->middleware('isLogged');
+Route::get('/utilisateurs', [StudentController::class, 'getUtilisateurs'])->name('users')->middleware('isLogged');
 Route::post('/inscrire', [StudentController::class, 'createStudent'])->name('inscrire')->middleware('isLogged');
 Route::get('/etudiant/{id}', [StudentController::class, 'getDetails'])->name('infosEtudiant')->middleware('isLogged');
 Route::get('/modifier-infos-etudiant/{id}', [StudentController::class, 'getForUpdate'])->name('getEtudiant')->middleware('isLogged');
