@@ -72,7 +72,7 @@ class PaymentController extends Controller
         if(session()->has('utilisateur')){
             $utilisateur = Etudiant::find(session('utilisateur'));
             $paiements = Paiement::where('active', true)->orderBy('created_at', 'desc')->get();
-            $versements = Paiement::where([['etudiantID', $id], ['active', true]])->orderBy('created_at', 'desc')->get();
+            $versements = Paiement::where([['etudiantID', $id], ['active', true]])->with('createdBy')->orderBy('created_at', 'desc')->get();
             if($versements->isEmpty()){
                 return redirect()->back();
             }
