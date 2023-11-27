@@ -304,7 +304,7 @@ class PaymentController extends Controller
 
             $paiements = Paiement::where([['etudiantID', $id], ['active', true]])->get();
             
-            if(!$paiements[0]->qrCode) {
+            //if(!$paiements[0]->qrCode) {
 
                 $data = 'https://synessben.committeam.com/qrcode/'.$etudiant->numCarteEtud;
 
@@ -317,7 +317,7 @@ class PaymentController extends Controller
                     $paiement->update();
                 }
 
-            }
+            //}
 
         return response()->json([
             'image' => $paiements[0]->qrCode,
