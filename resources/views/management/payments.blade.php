@@ -121,7 +121,7 @@
                                         <div class="col-lg-6 col-md-12">
                                             <b>Etudiant</b>
                                             <div class="form-group">
-                                                <select class="form-control show-tick" id="etudiantID" name="etudiantID" required="required">
+                                                <select class="form-control z-index show-tick" data-live-search="true" id="etudiantID" name="etudiantID" required="required">
                                                     <option selected value="" disabled>-- Séléctionner l'étudiant --</option>
                                                     @foreach($etudiantsWithoutPaiements as $etudiant)
                                                         <option value="{{$etudiant->id}} {{ (old('etudiantID') == $etudiant->id) ? 'selected' : '' }}">{{$etudiant->nom}} {{$etudiant->prenoms}}</option>
