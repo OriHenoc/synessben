@@ -54,6 +54,9 @@ class PaymentController extends Controller
 
             $etudiantsWithoutPaiements = Etudiant::where('active', true)
                 ->whereDoesntHave('paiements')
+                ->whereHas('role', function ($query) {
+                    $query->where('libelle', 'ETUDIANT');
+                })
                 ->orderBy('created_at', 'desc')
                 ->get();
 

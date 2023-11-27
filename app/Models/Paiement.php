@@ -27,11 +27,11 @@ class Paiement extends Model
         return $this->belongsTo(Etudiant::class, 'etudiantID', 'id');
     }
 
-    public function createdBy(){
+    public function createdPar(){
         return $this->belongsTo(Etudiant::class, 'createdBy', 'id');
     }
 
-    public function updatedBy(){
+    public function updatedPar(){
         return $this->belongsTo(Etudiant::class, 'updatedBy', 'id');
     }
 

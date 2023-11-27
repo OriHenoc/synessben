@@ -41,7 +41,7 @@
                                         <th>Montant Payé</th>
                                         <th>Montant Restant</th>
                                         <th>Statut</th>
-                                        <!--<th>Validé par</th>-->
+                                        <th>Validé par</th>
                                         <th>Commentaire</th>
                                     </tr>
                                 </thead>                                
@@ -53,7 +53,7 @@
                                         <td>{{ number_format($paiement->montantPaye, 0, ',', '.') }} F CFA</td>
                                         <td class="font-weight-bold">{{ number_format($paiement->montantRestant, 0, ',', '.') }} F CFA</td>
                                         <td>@if($paiement->montantRestant > 0)<span class="badge badge-danger">Acompté</span>@else<span class="badge badge-success">Soldé</span>@endif </td>
-                                        {{-- <!--<td>{{ $paiement->createdBy->nom }} {{ $paiement->createdBy->prenom }}</td>--> --}}
+                                        <td>{{ $paiement->createdPar->nom }} {{ $paiement->createdPar->prenoms }} @if($paiement->createdPar->username) <span class="text-uppercase">({{$paiement->createdPar->username}})</span> @endif</td>
                                         <td>{{ $paiement->commentaire }}</td>
                                     </tr>
                                     @endforeach
