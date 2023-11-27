@@ -376,9 +376,13 @@ class StudentController extends Controller
 
             $latestVersement = Paiement::where([['etudiantID', $etudiant->id], ['active', true]])->latest('created_at')->first();
 
-            $montantRestant = $latestVersement->montantRestant;
-
-            return view('public.student', compact('etudiant', 'menu', 'montantRestant'));
+            if($latestVersement){
+                $montantRestant = $latestVersement->montantRestant;
+                return view('public.student', compact('etudiant', 'menu', 'montantRestant'));
+            }
+            else{
+                return view('public.badCode', compact('menu'));
+            }
         }
         else {
             return view('public.badCode', compact('menu'));
