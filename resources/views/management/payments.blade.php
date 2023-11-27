@@ -52,6 +52,7 @@
                                             <tr>
                                                 <th>Date</th>
                                                 <th>Etudiant</th>
+                                                <th>Téléphone</th>
                                                 <th>Montant à Payer</th>
                                                 <th>Montant Payé</th>
                                                 <th>Montant Restant</th>
@@ -65,6 +66,7 @@
                                             <tr @if($paiement->montantRestant > 0) data-status="partie" @else data-status="solde" @endif">
                                                 <td>{{ date('d/m/Y', strtotime($paiement->datePaiement)) }}</td>
                                                 <td>{{$paiement->etudiant->nom}} {{$paiement->etudiant->prenoms}}</td>
+                                                <td>{{$paiement->etudiant->telephone}}</td>
                                                 <td>{{ number_format($paiement->montantApayer, 0, ',', '.') }} F CFA</td>
                                                 <td>{{ number_format($paiement->montantPaye, 0, ',', '.') }} F CFA</td>
                                                 <td class="font-weight-bold">{{ number_format($paiement->montantRestant, 0, ',', '.') }} F CFA</td>
