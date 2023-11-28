@@ -374,7 +374,7 @@ class StudentController extends Controller
 
         if($etudiant){
 
-            $latestVersement = Paiement::where([['etudiantID', $etudiant->id], ['active', true]])->latest('created_at')->first();
+            $latestVersement = Paiement::where([['etudiantID', $etudiant->id]])->latest('created_at')->first();
 
             if($latestVersement){
                 $montantRestant = $latestVersement->montantRestant;
