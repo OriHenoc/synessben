@@ -45,9 +45,12 @@ class PaymentController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
 
-            $etudiantsNonSoldes = Etudiant::where('active', true)
+                $etudiantsNonSoldes = Etudiant::whereHas('paiements', function ($query) {
+                    $query->where('active', true); // Check active field in paiements relationship
+                })
+                ->where('active', true) // Check active field in Etudiant model
                 ->whereDoesntHave('paiements', function ($query) {
-                    $query->where('montantRestant', 0)->where('active', true);
+                    $query->where('montantRestant', 0);
                 })
                 ->orderBy('created_at', 'desc')
                 ->get();
