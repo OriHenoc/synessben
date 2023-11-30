@@ -78,7 +78,7 @@
                                                 @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
                                                 <td>
                                                     <button title="voir QR Code" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-qrcode" data-etudiant="{{$paiement->etudiant->id}}"><i class="material-icons">center_focus_strong</i></button>
-                                                    <button title="voir Reçu" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-recu" data-etudiant="{{$paiement->etudiant->id}}"><i class="material-icons">picture_as_pdf</i></button>
+                                                    <button title="voir Reçu" id="voir-recu-button" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-recu" data-etudiant="{{$paiement->etudiant->id}}" disabled><i class="material-icons">picture_as_pdf</i></button>
                                                 </td>
                                                 @endif
                                                 <td>
@@ -400,6 +400,8 @@
 <script>
     $(document).ready(function () {
 
+        var recuReady = false;
+
         @if($errors->any())
             $(document).ready(function () {
                 $('#List').removeClass('active');
@@ -635,6 +637,8 @@
             var link = 'https://synessben.committeam.com/assets/images/etudiants/qrcode/'+ data.image;
             $('#qrCodeImage').attr('src', link);
             $('#qrLink').attr('href', link);
+            recuReady = true;
+            $('#voir-recu-button').prop('disabled', false);
             $('#qrCodeModal').modal('show');
         },
         error: function (xhr, status, error) {
