@@ -100,7 +100,7 @@ class PaymentController extends Controller
             $paiements = Paiement::where('active', true)->orderBy('created_at', 'desc')->get();
             $versements = Paiement::where([['createdBy', $id], ['active', true]])->orderBy('created_at', 'desc')->get();
             if($versements->isEmpty()){
-                return redirect()->back()->with('error', 'Pas de versements validés !');
+                return redirect()->back()->with('errors', 'Pas de versements validés !');
             }
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
@@ -257,7 +257,7 @@ class PaymentController extends Controller
             $paiements = Paiement::where('etudiantID', $id)->get();
 
             if (!$paiements) {
-                redirect()->back()->with('error', 'Paiements non trouvés !');
+                redirect()->back()->with('errors', 'Paiements non trouvés !');
             }
 
             foreach($paiements as $paiement){
@@ -312,7 +312,7 @@ class PaymentController extends Controller
             return redirect()->back()->with('success', 'Reçu envoyé avec succès !');
         }
             
-            return redirect()->back()->with('error', 'Reçu non envoyé !');
+            return redirect()->back()->with('errors', 'Reçu non envoyé !');
         }
         else {
             return redirect('deconnexion');

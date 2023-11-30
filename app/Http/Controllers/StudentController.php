@@ -348,7 +348,7 @@ class StudentController extends Controller
     {
         $etudiant = Etudiant::find($id);
         if (!$etudiant) {
-            redirect()->back()->with('error', 'Etudiant non trouvé !');
+            redirect()->back()->with('errors', 'Etudiant non trouvé !');
         }
 
         $etudiant->active = false;

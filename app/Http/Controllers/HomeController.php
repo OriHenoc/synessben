@@ -146,7 +146,7 @@ class HomeController extends Controller
             //dd($request);
             if($request->ajax()){
                 if($_FILES['photo']['size'] > 3145728){
-                    return redirect()->back()->with('error','Photo trop lourde !');
+                    return redirect()->back()->with('errors','Photo trop lourde !');
                 }
                 $photo = $request->file('photo');
                 $extentionFichier = $photo->getClientOriginalExtension();
@@ -165,7 +165,7 @@ class HomeController extends Controller
                     ]);  
                 }
                 else{
-                    return redirect()->route('profile')->with('error','Impossible de modifier la photo !');
+                    return redirect()->route('profile')->with('errors','Impossible de modifier la photo !');
                 }
                 
             }
