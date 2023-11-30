@@ -100,7 +100,7 @@ class PaymentController extends Controller
             $paiements = Paiement::where('active', true)->orderBy('created_at', 'desc')->get();
             $versements = Paiement::where([['createdBy', $id], ['active', true]])->orderBy('created_at', 'desc')->get();
             if($versements->isEmpty()){
-                return redirect()->back();
+                return redirect()->back()->with('error', 'Pas de versements validés !');
             }
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();

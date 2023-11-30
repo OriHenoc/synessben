@@ -22,6 +22,14 @@
         </div>
         <div class="row clearfix">
             <div class="col-lg-12">
+                @if(Session::has('error'))
+                    <div class="alert alert-danger mt-4 text-center">
+                        {{ Session::get('error') }}
+                        @php
+                            Session::forget('error');
+                        @endphp
+                    </div>
+                @endif
                 @if(Session::has('success'))
                     <div class="alert alert-success m-2 text-center">
                         {{ Session::get('success') }}
