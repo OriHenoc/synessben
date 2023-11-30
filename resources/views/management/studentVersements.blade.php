@@ -4,7 +4,7 @@
 <body class="theme-black">
 @include('layout/nav')
 
-@if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
+@if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE' || $utilisateur->role->libelle == 'SUPERVISEUR')
 
 <section class="content contact">
     <div class="container-fluid">

@@ -50,7 +50,7 @@
                     </a>
                 </li>
                 @endif
-                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
+                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE' || $utilisateur->role->libelle == 'SUPERVISEUR')
                 <li class="@if($menu=='Paiements') active open @endif">
                     <a href="{{route('payments')}}">
                         <i class="zmdi zmdi-money"></i>
