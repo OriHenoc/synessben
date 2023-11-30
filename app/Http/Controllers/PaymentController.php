@@ -40,14 +40,14 @@ class PaymentController extends Controller
             $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
             $etudiantsSoldes = Etudiant::where('active', true)
                 ->whereHas('paiements', function ($query) {
-                    $query->where('montantRestant', 0);
+                    $query->where(['montantRestant', 0], ['active', true]);
                 })
                 ->orderBy('created_at', 'desc')
                 ->get();
 
             $etudiantsNonSoldes = Etudiant::where('active', true)
                 ->whereDoesntHave('paiements', function ($query) {
-                    $query->where('montantRestant', 0);
+                    $query->where(['montantRestant', 0], ['active', true]);
                 })
                 ->orderBy('created_at', 'desc')
                 ->get();
