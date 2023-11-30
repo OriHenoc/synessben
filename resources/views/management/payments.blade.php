@@ -26,7 +26,9 @@
                     <div class="body m-b-10">
                         <ul class="nav nav-tabs padding-0">
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#List">Liste</a></li>
+                            @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Addnew">Nouveau</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
