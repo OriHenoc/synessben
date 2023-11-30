@@ -59,7 +59,9 @@
                                                 <th>Montant Payé</th>
                                                 <th>Montant Restant</th>
                                                 <th>Statut</th>
+                                                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
                                                 <th>Fichiers</th>
+                                                @endif
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>                                
@@ -73,10 +75,12 @@
                                                 <td>{{ number_format($paiement->montantPaye, 0, ',', '.') }} F CFA</td>
                                                 <td class="font-weight-bold">{{ number_format($paiement->montantRestant, 0, ',', '.') }} F CFA</td>
                                                 <td>@if($paiement->montantRestant > 0)<span class="badge badge-danger">Acompté</span>@else<span class="badge badge-success">Soldé</span>@endif </td>
+                                                @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
                                                 <td>
                                                     <button title="voir QR Code" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-qrcode" data-etudiant="{{$paiement->etudiant->id}}"><i class="material-icons">center_focus_strong</i></button>
                                                     <button title="voir Reçu" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-recu" data-etudiant="{{$paiement->etudiant->id}}"><i class="material-icons">picture_as_pdf</i></button>
                                                 </td>
+                                                @endif
                                                 <td>
                                                     <a href="{{route('getAllEtudiantPayments', $paiement->etudiant->id)}}"><button title="voir tout" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-eye"></i></button></a>
                                                     @if($paiement->montantRestant > 0)<button title="ajouter un versement" class="btn btn-icon btn-neutral btn-icon-mini margin-0 ajouter-versement" data-id="{{$paiement->id}}"><i class="zmdi zmdi-plus-circle"></i></button>@endif
