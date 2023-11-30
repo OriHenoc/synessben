@@ -42,7 +42,7 @@ class HomeController extends Controller
             
             $etudiantsSoldes = Etudiant::where('active', true)
                 ->whereHas('paiements', function ($query) {
-                    $query->where(['montantRestant', 0], ['active', true]);
+                    $query->where('montantRestant', 0)->where('active', true);
                 })
                 ->orderBy('created_at', 'desc')
                 ->get();
@@ -50,7 +50,7 @@ class HomeController extends Controller
             $etudiantsNonSoldes = Etudiant::where('active', true)
                 ->whereHas('paiements')
                 ->whereDoesntHave('paiements', function ($query) {
-                    $query->where(['montantRestant', 0], ['active', true]);
+                    $query->where('montantRestant', 0)->where('active', true);
                 })
                 ->orderBy('created_at', 'desc')
                 ->get();
