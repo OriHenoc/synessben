@@ -29,6 +29,7 @@ Route::get('/paiements', [PaymentController::class, 'index'])->name('payments')-
 Route::post('/payer', [PaymentController::class, 'createPayment'])->name('payer')->middleware('isLogged');
 Route::get('/ajouter-versement/{id}', [PaymentController::class, 'getPaymentAjoutDetails'])->name('infosVersementAjout')->middleware('isLogged');
 Route::get('/versements-etudiant/{id}', [PaymentController::class, 'getAllEtudiantPayments'])->name('getAllEtudiantPayments')->middleware('isLogged');
+Route::get('/versements-valides/{id}', [PaymentController::class, 'getAllMadePayments'])->name('getAllMadePayments')->middleware('isLogged');
 Route::get('/recu-versements-etudiant/{id}', [PaymentController::class, 'getAllEtudiantPaymentsJson'])->name('getAllEtudiantPaymentsJson')->middleware('isLogged');
 Route::post('/supprimerPaiements/{id}', [PaymentController::class, 'desactivateAll'])->name('supprimerPaiements')->middleware('isLogged');
 Route::post('/envoyer-recu', [PaymentController::class, 'sendInvoice'])->name('envoyerRecu')->middleware('isLogged');

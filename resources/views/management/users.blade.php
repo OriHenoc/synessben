@@ -54,6 +54,9 @@
                                             <td>{{$etudiant->email}}</td>
                                             <td>{{$etudiant->telephone}}</td>
                                             <td>
+                                                @if($etudiant->role->libelle == 'COMPTABLE')
+                                                <a href="{{route('getAllMadePayments', $etudiant->id)}}"><button title="voir validations" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-money"></i></button></a>
+                                                @endif
                                                 <button title="voir" class="btn btn-icon btn-neutral btn-icon-mini margin-0 voir-etudiant" data-id="{{$etudiant->id}}"><i class="zmdi zmdi-eye"></i></button>
                                                 @if($utilisateur->role->libelle !== 'ROOT')
                                                     @if($etudiant->role->libelle !== 'ROOT')

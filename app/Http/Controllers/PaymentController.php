@@ -94,6 +94,26 @@ class PaymentController extends Controller
         }
     }
 
+    public function getAllMadePayments($id){
+        if(session()->has('utilisateur')){
+            $utilisateur = Etudiant::find(session('utilisateur'));
+            $paiements = Paiement::where('active', true)->orderBy('created_at', 'desc')->get();
+            $versements = Paiement::where([['createdBy', $id], ['active', true]])->orderBy('created_at', 'desc')->get();
+            if($versements->isEmpty()){
+                return redirect()->back();
+            }
+            $etudiants = Etudiant::where([['active', true]])->orderBy('created_at', 'desc')->get();
+            $fiveLast = Etudiant::where('active', true)->latest()->take(5)->get();
+            $utilisateurs = Etudiant::where([['active', true], ['access', true]])->orderBy('created_at', 'desc')->get();
+            $roles = Role::where([['active', true]])->orderBy('libelle', 'desc')->get();
+            $menu = 'Versements de <b>'.$versements[0]->etudiant->nom.' '.$versements[0]->etudiant->prenoms.'</b>';
+            return view('management.madeVersements', compact('menu', 'utilisateur', 'etudiants', 'paiements', 'versements', 'utilisateurs', 'roles', 'fiveLast'));
+        }
+        else {
+            return redirect('deconnexion');
+        }
+    }
+
     public function getAllEtudiantPaymentsJson($id){
         if(session()->has('utilisateur')){
             $versements = Paiement::where([['etudiantID', $id], ['active', true]])->orderBy('created_at', 'desc')->get();
