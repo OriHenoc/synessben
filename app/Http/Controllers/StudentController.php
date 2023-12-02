@@ -86,7 +86,7 @@ class StudentController extends Controller
                     'numCarteEtud' => 'required|unique:etudiants',
                     'email' => 'required|email|unique:etudiants',
                     'telephone' => 'required|unique:etudiants',
-                    'username' => 'unique:etudiants',
+                    //'username' => 'unique:etudiants',
                 ],
                 [
                     'nom.required' => 'Le nom est requis',
@@ -100,7 +100,7 @@ class StudentController extends Controller
                     'email.unique' => 'Cet e-mail existe déja',
                     "email.email" => "Cet email n'est pas un email valide",
                     'numCarteEtud.unique' => 'Ce numéro de carte étudiant existe déja',
-                    'username.unique' => 'Ce nom d\'utilisateur existe déja'
+                    //'username.unique' => 'Ce nom d\'utilisateur existe déja'
                 ]
             );
 
