@@ -52,6 +52,7 @@
                                     <table class="table table-bordered table-filter table-striped table-hover dataTable js-exportable">
                                         <thead>
                                             <tr>
+                                                <th>#</th>
                                                 <th>Date</th>
                                                 <th>Etudiant</th>
                                                 <th>Téléphone</th>
@@ -66,8 +67,15 @@
                                             </tr>
                                         </thead>                                
                                         <tbody>
-                                            @foreach($paiementsEtudiants as $paiement)
-                                            <tr @if($paiement->montantRestant > 0) data-status="partie" @else data-status="solde" @endif">
+                                            @php 
+                                                $i = 0;
+                                            @endphp
+                                                @foreach($paiementsEtudiants as $paiement)
+                                            @php 
+                                                $i++;
+                                            @endphp
+                                                <tr @if($paiement->montantRestant > 0) data-status="partie" @else data-status="solde" @endif">
+                                                <td>{{$i}}</td>
                                                 <td>{{ date('d/m/Y', strtotime($paiement->datePaiement)) }}</td>
                                                 <td>{{$paiement->etudiant->nom}} {{$paiement->etudiant->prenoms}}</td>
                                                 <td>{{$paiement->etudiant->telephone}}</td>
@@ -406,19 +414,9 @@
 <script>
     $(document).ready(function () {
 
- 
-
-
         $('.voir-qrcode').click(function (e) {
         e.preventDefault();
         var etudiantID = $(this).data('etudiant');
-
-        console.log('Before if statement for etudiantID:', etudiantID);
-@if ($paiement->montantRestant > 0) 
-   console.log('Inside if statement for etudiantID:', etudiantID);
-   // AJAX request
-@endif
-console.log('After if statement for etudiantID:', etudiantID);
 
         // Store a reference to the clicked element
         var clickedButton = $(this);
