@@ -406,6 +406,14 @@
 <script>
     $(document).ready(function () {
 
+        console.log('Before if statement for etudiantID:', etudiantID);
+@if ($paiement->montantRestant > 0) 
+   console.log('Inside if statement for etudiantID:', etudiantID);
+   // AJAX request
+@endif
+console.log('After if statement for etudiantID:', etudiantID);
+
+
         $('.voir-qrcode').click(function (e) {
         e.preventDefault();
         var etudiantID = $(this).data('etudiant');
