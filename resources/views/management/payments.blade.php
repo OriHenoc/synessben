@@ -66,7 +66,7 @@
                                             </tr>
                                         </thead>                                
                                         <tbody>
-                                            
+                                            @foreach($paiementsEtudiants as $paiement)
                                                 <tr @if($paiement->montantRestant > 0) data-status="partie" @else data-status="solde" @endif">
                                                 <td>{{ date('d/m/Y', strtotime($paiement->datePaiement)) }}</td>
                                                 <td>{{$paiement->etudiant->nom}} {{$paiement->etudiant->prenoms}}</td>
