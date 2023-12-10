@@ -4061,7 +4061,7 @@
     }),
     (Ua.defaults = {
       aaData: null,
-      aaSorting: [[1, "asc"]],
+      aaSorting: [[1, "desc"]],
       aaSortingFixed: [],
       ajax: null,
       aLengthMenu: [5, 10, 25, 50, 100],
