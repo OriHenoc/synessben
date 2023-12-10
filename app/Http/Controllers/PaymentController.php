@@ -367,7 +367,7 @@ class PaymentController extends Controller
             $qrPath = public_path('assets/images/etudiants/qrcode/') . $paiement->qrCode;
 
             //$pdfPath = public_path('assets/images/etudiants/qrcode/') . $etudiant->numCarteEtud . '.pdf';
-/*
+            /*
             $pdf = new TCPDF();
             $pdf->SetPageOrientation('L');
             $pdf->AddPage();

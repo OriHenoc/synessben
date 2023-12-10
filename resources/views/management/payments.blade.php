@@ -410,6 +410,9 @@
         e.preventDefault();
         var etudiantID = $(this).data('etudiant');
 
+        // Store a reference to the clicked element
+        var clickedButton = $(this);
+
         // Disable all "voir Reçu" buttons
         $('.voir-recu').prop('disabled', true);
 
@@ -424,12 +427,14 @@
                 var link = 'https://synessben.committeam.com/assets/images/etudiants/qrcode/' + data.image;
                 $('#qrCodeImage').attr('src', link);
                 $('#qrLink').attr('href', link);
-                // Enable the corresponding "voir Reçu" button
-                var recuButtonId = $(this).data('reçu-button-id');
+
+                // Enable the corresponding "voir Reçu" button using the stored reference
+                var recuButtonId = clickedButton.data('reçu-button-id');
                 $('#' + recuButtonId).prop('disabled', false);
                 $('#qrCodeModal').modal('show');
             },
             error: function (xhr, status, error) {
+                console.log(error);
                 console.error(xhr.responseText);
             }
         });
