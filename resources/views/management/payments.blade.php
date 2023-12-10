@@ -414,6 +414,7 @@
         // Enable the corresponding "voir Reçu" button for the clicked row
         var recuButtonId = $(this).data('reçu-button-id');
         $('#' + recuButtonId).prop('disabled', false);
+        $('#voir-recu-button-' + recuButtonId).prop('disabled', false);
     });
 
         @if($errors->any())
