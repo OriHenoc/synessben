@@ -78,7 +78,7 @@
                                                 @if($utilisateur->role->libelle == 'ROOT' || $utilisateur->role->libelle == 'ADMIN' || $utilisateur->role->libelle == 'COMPTABLE')
                                                 <td>
                                                     <!-- Add a unique identifier and data attribute for each "voir QR Code" button -->
-                                                    <button title="voir QR Code" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-qrcode" data-etudiant="{{$paiement->etudiant->id}}">
+                                                    <button title="voir QR Code" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-qrcode" data-etudiant="{{$paiement->etudiant->id}}" data-reçu-button-id="voir-recu-button-{{$paiement->etudiant->id}}">
                                                         <i class="material-icons">center_focus_strong</i>
                                                     </button>
                                                     <!-- Add a unique ID for each "voir Reçu" button -->
@@ -86,7 +86,6 @@
                                                         <i class="material-icons">picture_as_pdf</i>
                                                     </button>
                                                 </td>
-                                                
                                                 @endif
                                                 <td>
                                                     <a href="{{route('getAllEtudiantPayments', $paiement->etudiant->id)}}"><button title="voir tout" class="btn btn-icon btn-neutral btn-icon-mini margin-0"><i class="zmdi zmdi-eye"></i></button></a>
@@ -408,14 +407,7 @@
     $(document).ready(function () {
 
          // Handle "voir QR Code" button click
-         $('.voir-qrcode').click(function() {
-        // Disable all "voir Reçu" buttons
-        $('.voir-recu').prop('disabled', true);
-
-        // Enable the corresponding "voir Reçu" button for the clicked row
-        var etudiantId = $(this).data('etudiant');
-        $('#voir-recu-button-' + etudiantId).prop('disabled', false);
-    });
+    
 
         @if($errors->any())
             $(document).ready(function () {
@@ -639,6 +631,12 @@
 
     $('.voir-qrcode').click(function (e) {
     e.preventDefault();
+    $('.voir-recu').prop('disabled', true);
+
+        // Enable the corresponding "voir Reçu" button for the clicked row
+        var recuButtonId = $(this).data('reçu-button-id');
+        $('#' + recuButtonId).prop('disabled', false);
+        
     var etudiantID = $(this).data('etudiant');
 
     $.ajax({
