@@ -406,8 +406,35 @@
 <script>
     $(document).ready(function () {
 
-         // Handle "voir QR Code" button click
-    
+        $('.voir-qrcode').click(function (e) {
+        e.preventDefault();
+        var etudiantID = $(this).data('etudiant');
+
+        // Disable all "voir Reçu" buttons
+        $('.voir-recu').prop('disabled', true);
+
+        $.ajax({
+            type: 'GET',
+            headers: { 'X-CSRF-Token': $('meta[name=csrf_token]').attr('content') },
+            async: true,
+            contentType: false,
+            url: '/qrcode-etudiant/' + etudiantID,
+            success: function (data) {
+                $('#qrEtudiantID').val(etudiantID);
+                var link = 'https://synessben.committeam.com/assets/images/etudiants/qrcode/' + data.image;
+                $('#qrCodeImage').attr('src', link);
+                $('#qrLink').attr('href', link);
+                // Enable the corresponding "voir Reçu" button
+                var recuButtonId = $(this).data('reçu-button-id');
+                $('#' + recuButtonId).prop('disabled', false);
+                $('#qrCodeModal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
 
         @if($errors->any())
             $(document).ready(function () {
@@ -629,39 +656,7 @@
         });
     });
 
-    $('.voir-qrcode').click(function (e) {
-    e.preventDefault();
-    $('.voir-recu').prop('disabled', true);
 
-        // Enable the corresponding "voir Reçu" button for the clicked row
-        var recuButtonId = $(this).data('reçu-button-id');
-        $('#' + recuButtonId).prop('disabled', false);
-        
-    var etudiantID = $(this).data('etudiant');
-
-    $.ajax({
-        type: 'GET',
-        headers: { 'X-CSRF-Token': $('meta[name=csrf_token]').attr('content') },
-        async: true,
-        contentType: false,
-        url: '/qrcode-etudiant/' + etudiantID,
-        success: function (data) {
-            $('#qrEtudiantID').val(etudiantID);
-            var link = 'https://synessben.committeam.com/assets/images/etudiants/qrcode/'+ data.image;
-            $('#qrCodeImage').attr('src', link);
-            $('#qrLink').attr('href', link);
-            //recuReady = true;
-            //$('#voir-recu-button').prop('disabled', false);
-            $('#qrCodeModal').modal('show');
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
-});
-
-
-    });
 </script>
 </body>
 </html>
