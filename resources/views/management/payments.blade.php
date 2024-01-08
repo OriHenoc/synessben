@@ -82,7 +82,8 @@
                                                         <i class="material-icons">center_focus_strong</i>
                                                     </button>
                                                     <!-- Add a unique ID for each "voir Reçu" button -->
-                                                    <button title="voir Reçu" id="voir-recu-button-{{$paiement->etudiant->id}}" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-recu" data-etudiant="{{$paiement->etudiant->id}}" disabled>
+                                                    <!--<button title="voir Reçu" id="voir-recu-button-{{$paiement->etudiant->id}}" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-recu" data-etudiant="{{$paiement->etudiant->id}}" disabled>-->
+                                                    <button title="voir Reçu" id="voir-recu-button-{{$paiement->etudiant->id}}" class="btn btn-icon btn-info btn-icon-mini margin-0 voir-recu" data-etudiant="{{$paiement->etudiant->id}}">
                                                         <i class="material-icons">picture_as_pdf</i>
                                                     </button>
                                                 </td>
@@ -414,7 +415,7 @@
         var clickedButton = $(this);
 
         // Disable all "voir Reçu" buttons
-        $('.voir-recu').prop('disabled', true);
+        //$('.voir-recu').prop('disabled', true);
 
         $.ajax({
             type: 'GET',
